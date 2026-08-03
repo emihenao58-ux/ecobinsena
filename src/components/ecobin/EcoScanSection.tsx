@@ -93,7 +93,7 @@ function PhoneCarousel() {
             src={actual.src}
             alt={actual.caption}
             loading="lazy"
-            className="block aspect-[9/19] w-full animate-[fade-in_0.4s_ease-out] object-cover object-top"
+            className="block aspect-[9/19] w-full object-cover object-top"
           />
         </div>
 
