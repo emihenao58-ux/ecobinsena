@@ -1,24 +1,57 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import { SiteHeader } from "@/components/ecobin/SiteHeader";
+import { HeroSection } from "@/components/ecobin/HeroSection";
+import { ProblemSection } from "@/components/ecobin/ProblemSection";
+import { ObjectivesSection } from "@/components/ecobin/ObjectivesSection";
+import { ArchitectureSection } from "@/components/ecobin/ArchitectureSection";
+import { TechSection } from "@/components/ecobin/TechSection";
+import { EcoScanSection } from "@/components/ecobin/EcoScanSection";
+import { ResultsSection } from "@/components/ecobin/ResultsSection";
+import { PrototypeSection } from "@/components/ecobin/PrototypeSection";
+import { TeamSection } from "@/components/ecobin/TeamSection";
+import { ClosingSection } from "@/components/ecobin/ClosingSection";
+import { SiteFooter } from "@/components/ecobin/SiteFooter";
+
+const title = "EcoBin — Caneca inteligente con IA, IoT y analítica | SENA";
+const description =
+  "EcoBin es un prototipo escolar del SENA: caneca inteligente y app EcoScan IA que usan visión artificial, IoT y analítica de datos para mejorar la separación de residuos.";
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title },
+      { name: "description", content: description },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+/**
+ * Landing page de EcoBin: una sola página con navegación por anclas.
+ * Cada sección vive en src/components/ecobin/ para poder editarla por separado.
+ */
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background">
+      <SiteHeader />
+      <main>
+        <HeroSection />
+        <ProblemSection />
+        <ObjectivesSection />
+        <ArchitectureSection />
+        <TechSection />
+        <EcoScanSection />
+        <ResultsSection />
+        <PrototypeSection />
+        <TeamSection />
+        <ClosingSection />
+      </main>
+      <SiteFooter />
     </div>
   );
 }
