@@ -4,6 +4,7 @@ import { SiteHeader } from "@/components/ecobin/SiteHeader";
 import { HeroSection } from "@/components/ecobin/HeroSection";
 import { ProblemSection } from "@/components/ecobin/ProblemSection";
 import { ObjectivesSection } from "@/components/ecobin/ObjectivesSection";
+import { ImpactSection } from "@/components/ecobin/ImpactSection";
 import { ArchitectureSection } from "@/components/ecobin/ArchitectureSection";
 import { TechSection } from "@/components/ecobin/TechSection";
 import { EcoScanSection } from "@/components/ecobin/EcoScanSection";
@@ -43,6 +44,7 @@ function Index() {
         <HeroSection />
         <ProblemSection />
         <ObjectivesSection />
+        <ImpactSection />
         <ArchitectureSection />
         <TechSection />
         <EcoScanSection />

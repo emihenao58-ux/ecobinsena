@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
+import logoSena from "@/assets/logo-sena.png.asset.json";
+import logoInstitucion from "@/assets/logo-institucion.png.asset.json";
 
 /** Enlaces de navegación por anclas (la página es de un solo scroll). */
 const links = [
   { href: "#problematica", label: "Problemática" },
   { href: "#objetivos", label: "Objetivos" },
+  { href: "#impacto", label: "Impacto" },
   { href: "#como-funciona", label: "Cómo funciona" },
   { href: "#ecoscan", label: "EcoScan IA" },
   { href: "#resultados", label: "Resultados" },
@@ -33,8 +36,7 @@ export function SiteHeader() {
     >
       <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 py-3 sm:px-6">
         <div className="flex min-w-0 items-center gap-3">
-          {/* TODO: reemplazar por el archivo real del logo del SENA */}
-          <LogoSlot text="LOGO SENA" />
+          <LogoSlot src={logoSena.url} alt="Logo SENA" />
           <a href="#inicio" className="min-w-0">
             <span className="block truncate font-display text-lg font-extrabold text-gradient-brand">
               EcoBin
@@ -57,8 +59,11 @@ export function SiteHeader() {
               </a>
             ))}
           </nav>
-          {/* TODO: reemplazar por el archivo real del logo de la institución */}
-          <LogoSlot text="LOGO INSTITUCIÓN" className="hidden sm:flex" />
+          <LogoSlot
+            src={logoInstitucion.url}
+            alt="Logo Institución Educativa Urbana San José"
+            className="hidden sm:flex"
+          />
           <ThemeToggle />
           <button
             type="button"
@@ -90,16 +95,28 @@ export function SiteHeader() {
   );
 }
 
-/** Recuadro placeholder para los logos oficiales. */
-export function LogoSlot({ text, className }: { text: string; className?: string }) {
+/**
+ * Contenedor de los logos oficiales (SENA / Institución).
+ * Fondo claro fijo para que los logos se lean bien también en modo oscuro,
+ * y altura común para que ambos tengan el mismo peso visual.
+ */
+export function LogoSlot({
+  src,
+  alt,
+  className,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) {
   return (
     <div
       className={cn(
-        "flex h-10 shrink-0 items-center justify-center rounded-lg border border-dashed border-primary/40 bg-secondary/50 px-3 text-[10px] font-semibold uppercase tracking-wider text-primary",
+        "flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-white p-1 shadow-[var(--shadow-soft)]",
         className,
       )}
     >
-      [{text}]
+      <img src={src} alt={alt} loading="lazy" className="h-full w-full object-contain" />
     </div>
   );
 }

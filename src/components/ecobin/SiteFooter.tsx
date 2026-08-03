@@ -1,13 +1,18 @@
 import { LogoSlot } from "./SiteHeader";
+import logoSena from "@/assets/logo-sena.png.asset.json";
+import logoInstitucion from "@/assets/logo-institucion.png.asset.json";
 
 export function SiteFooter() {
   return (
     <footer className="border-t border-border bg-card">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-[auto_1fr]">
         <div className="flex items-center gap-4">
-          {/* TODO: reemplazar por los archivos reales de los logos */}
-          <LogoSlot text="LOGO SENA" />
-          <LogoSlot text="LOGO INSTITUCIÓN" />
+          <LogoSlot src={logoSena.url} alt="Logo SENA" className="h-14 w-14" />
+          <LogoSlot
+            src={logoInstitucion.url}
+            alt="Logo Institución Educativa Urbana San José"
+            className="h-14 w-14"
+          />
         </div>
 
         <div className="text-sm text-muted-foreground md:text-right">
