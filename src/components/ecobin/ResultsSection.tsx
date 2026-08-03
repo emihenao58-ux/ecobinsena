@@ -45,7 +45,7 @@ function MetricCard({ value, label, suffix }: { value: number; label: string; su
     <Reveal>
       <div className="surface-card lift-on-hover h-full p-6">
         <p className="font-display text-4xl font-extrabold text-gradient-brand">
-          <AnimatedCounter value={value} suffix={suffix} />
+          <AnimatedCounter value={value} suffix={suffix ?? ""} />
         </p>
         <p className="mt-2 text-sm text-muted-foreground">{label}</p>
       </div>
