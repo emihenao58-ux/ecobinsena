@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Smartphone,
   BrainCircuit,
@@ -8,6 +8,8 @@ import {
   Database,
   BarChart3,
   ChevronRight,
+  Play,
+  Pause,
 } from "lucide-react";
 import { SectionHeading } from "./SectionHeading";
 import { Reveal } from "./Reveal";
