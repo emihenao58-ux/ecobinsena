@@ -36,7 +36,16 @@ export function SiteHeader() {
     >
       <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 py-3 sm:px-6">
         <div className="flex min-w-0 items-center gap-3">
-          <LogoSlot src={logoSena.url} alt="Logo SENA" />
+          {/* Bloque institucional: ambos logos con el mismo peso visual */}
+          <div className="flex shrink-0 items-center gap-2.5">
+            <LogoSlot src={logoSena.url} alt="Logo SENA" />
+            <span aria-hidden className="h-7 w-px bg-border" />
+            <LogoSlot
+              src={logoInstitucion.url}
+              alt="Logo Institución Educativa Urbana San José"
+            />
+          </div>
+          <span aria-hidden className="hidden h-7 w-px bg-border sm:block" />
           <a href="#inicio" className="min-w-0">
             <span className="block truncate font-display text-lg font-extrabold text-gradient-brand">
               EcoBin
@@ -59,11 +68,6 @@ export function SiteHeader() {
               </a>
             ))}
           </nav>
-          <LogoSlot
-            src={logoInstitucion.url}
-            alt="Logo Institución Educativa Urbana San José"
-            className="hidden sm:flex"
-          />
           <ThemeToggle />
           <button
             type="button"
@@ -97,8 +101,8 @@ export function SiteHeader() {
 
 /**
  * Contenedor de los logos oficiales (SENA / Institución).
- * Fondo claro fijo para que los logos se lean bien también en modo oscuro,
- * y altura común para que ambos tengan el mismo peso visual.
+ * Los archivos ya vienen recortados y con fondo transparente, así que se
+ * muestran sin recuadro: misma caja cuadrada para que ninguno pese más que el otro.
  */
 export function LogoSlot({
   src,
@@ -112,11 +116,16 @@ export function LogoSlot({
   return (
     <div
       className={cn(
-        "flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-white p-1 shadow-[var(--shadow-soft)]",
+        "flex h-10 w-10 shrink-0 items-center justify-center",
         className,
       )}
     >
-      <img src={src} alt={alt} loading="lazy" className="h-full w-full object-contain" />
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        className="h-full w-full object-contain drop-shadow-sm"
+      />
     </div>
   );
 }
