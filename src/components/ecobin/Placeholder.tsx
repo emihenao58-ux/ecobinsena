@@ -33,7 +33,7 @@ export function Placeholder({
 /** Marcador en línea para cifras que aún no se han completado. */
 export function DataPlaceholder({ children }: { children: ReactNode }) {
   return (
-    <mark className="rounded-md bg-accent/15 px-1.5 py-0.5 text-sm font-semibold text-accent-foreground/90 [color:var(--teal)]">
+    <mark className="rounded-md bg-secondary px-1.5 py-0.5 text-xs font-semibold text-secondary-foreground ring-1 ring-primary/30">
       [DATO REAL: {children}]
     </mark>
   );
