@@ -50,6 +50,18 @@ export function TeamSection() {
             </div>
           </div>
         </Reveal>
+
+        <Reveal className="mt-8">
+          <div className="surface-card p-6 text-center">
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Agradecemos a nuestros docentes orientadores{" "}
+              <span className="font-semibold text-foreground">Yamid Ordoñez</span> y{" "}
+              <span className="font-semibold text-foreground">Juana Valentina</span> por
+              acompañarnos en el desarrollo de EcoBin y por su tiempo en las entrevistas que nos
+              ayudaron a entender la problemática de residuos en el colegio.
+            </p>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
