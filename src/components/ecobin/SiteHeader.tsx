@@ -36,7 +36,16 @@ export function SiteHeader() {
     >
       <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 py-3 sm:px-6">
         <div className="flex min-w-0 items-center gap-3">
-          <LogoSlot src={logoSena.url} alt="Logo SENA" />
+          {/* Bloque institucional: ambos logos con el mismo peso visual */}
+          <div className="flex shrink-0 items-center gap-2.5">
+            <LogoSlot src={logoSena.url} alt="Logo SENA" />
+            <span aria-hidden className="h-7 w-px bg-border" />
+            <LogoSlot
+              src={logoInstitucion.url}
+              alt="Logo Institución Educativa Urbana San José"
+            />
+          </div>
+          <span aria-hidden className="hidden h-7 w-px bg-border sm:block" />
           <a href="#inicio" className="min-w-0">
             <span className="block truncate font-display text-lg font-extrabold text-gradient-brand">
               EcoBin
@@ -59,11 +68,6 @@ export function SiteHeader() {
               </a>
             ))}
           </nav>
-          <LogoSlot
-            src={logoInstitucion.url}
-            alt="Logo Institución Educativa Urbana San José"
-            className="hidden sm:flex"
-          />
           <ThemeToggle />
           <button
             type="button"
