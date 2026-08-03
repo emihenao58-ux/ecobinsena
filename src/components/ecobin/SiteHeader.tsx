@@ -90,16 +90,28 @@ export function SiteHeader() {
   );
 }
 
-/** Recuadro placeholder para los logos oficiales. */
-export function LogoSlot({ text, className }: { text: string; className?: string }) {
+/**
+ * Contenedor de los logos oficiales (SENA / Institución).
+ * Fondo claro fijo para que los logos se lean bien también en modo oscuro,
+ * y altura común para que ambos tengan el mismo peso visual.
+ */
+export function LogoSlot({
+  src,
+  alt,
+  className,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) {
   return (
     <div
       className={cn(
-        "flex h-10 shrink-0 items-center justify-center rounded-lg border border-dashed border-primary/40 bg-secondary/50 px-3 text-[10px] font-semibold uppercase tracking-wider text-primary",
+        "flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-white p-1 shadow-[var(--shadow-soft)]",
         className,
       )}
     >
-      [{text}]
+      <img src={src} alt={alt} loading="lazy" className="h-full w-full object-contain" />
     </div>
   );
 }
