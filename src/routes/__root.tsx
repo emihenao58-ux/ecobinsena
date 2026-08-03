@@ -92,6 +92,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "EcoBin — Caneca inteligente | SENA" },
+      { name: "twitter:description", content: "Proyecto escolar EcoBin: caneca inteligente y app EcoScan IA con IA, IoT y analítica de datos." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/771c79a2-0a26-4cda-91f8-d9f09a290d09/id-preview-00a41849--1b5caa36-3fc1-4cc4-beff-f437c42ffaee.lovable.app-1785797617021.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/771c79a2-0a26-4cda-91f8-d9f09a290d09/id-preview-00a41849--1b5caa36-3fc1-4cc4-beff-f437c42ffaee.lovable.app-1785797617021.png" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
