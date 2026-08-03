@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "./ThemeToggle";
 
 /** Enlaces de navegación por anclas (la página es de un solo scroll). */
 const links = [
@@ -58,6 +59,7 @@ export function SiteHeader() {
           </nav>
           {/* TODO: reemplazar por el archivo real del logo de la institución */}
           <LogoSlot text="LOGO INSTITUCIÓN" className="hidden sm:flex" />
+          <ThemeToggle />
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
