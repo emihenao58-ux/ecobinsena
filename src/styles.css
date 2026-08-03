@@ -246,6 +246,161 @@
   animation: ecobin-float 7s ease-in-out infinite;
 }
 
+/* ---- Micro-animaciones del pipeline "Cómo funciona" ---- */
+
+/* flash de cámara (app móvil) */
+@keyframes ecobin-flash {
+  0%,
+  70%,
+  100% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0.85;
+  }
+  85% {
+    opacity: 0.15;
+  }
+}
+@utility anim-flash {
+  animation: ecobin-flash 2s ease-out infinite;
+}
+
+/* línea de escaneo (IA) */
+@keyframes ecobin-scan {
+  0% {
+    transform: translateY(-120%);
+    opacity: 0;
+  }
+  15%,
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120%);
+    opacity: 0;
+  }
+}
+@utility anim-scan {
+  animation: ecobin-scan 1.6s ease-in-out infinite;
+}
+
+/* ondas de señal (MQTT) */
+@keyframes ecobin-wave {
+  0% {
+    transform: scale(0.4);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+@utility anim-wave {
+  animation: ecobin-wave 1.8s ease-out infinite;
+}
+
+/* LED parpadeando (ESP8266) */
+@keyframes ecobin-led {
+  0%,
+  45%,
+  100% {
+    opacity: 0.15;
+    transform: scale(0.8);
+  }
+  50%,
+  70% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+@utility anim-led {
+  animation: ecobin-led 1.1s ease-in-out infinite;
+}
+
+/* tapa de la caneca abriendo (servomotor) */
+@keyframes ecobin-servo {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  40%,
+  60% {
+    transform: rotate(-24deg);
+  }
+}
+@utility anim-servo {
+  transform-origin: left center;
+  animation: ecobin-servo 1.8s ease-in-out infinite;
+}
+
+/* filas llenándose (base de datos) */
+@keyframes ecobin-row {
+  0% {
+    transform: scaleX(0);
+    opacity: 0.3;
+  }
+  60%,
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+@utility anim-row {
+  transform-origin: left center;
+  animation: ecobin-row 1.6s ease-out infinite;
+}
+
+/* barras creciendo (Power BI) */
+@keyframes ecobin-bar {
+  0% {
+    transform: scaleY(0.15);
+  }
+  55%,
+  100% {
+    transform: scaleY(1);
+  }
+}
+@utility anim-bar {
+  transform-origin: bottom center;
+  animation: ecobin-bar 1.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+/* punto de luz que viaja por el conector */
+@keyframes ecobin-travel {
+  0% {
+    left: 0%;
+    opacity: 0;
+  }
+  15%,
+  85% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+@utility anim-travel {
+  animation: ecobin-travel 1.4s ease-in-out infinite;
+}
+
+/* halo pulsante alrededor de la etapa activa */
+@keyframes ecobin-halo {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.06);
+  }
+}
+@utility anim-halo {
+  animation: ecobin-halo 2.4s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
