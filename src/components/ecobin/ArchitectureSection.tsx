@@ -75,7 +75,11 @@ const stages = [
 
 export function ArchitectureSection() {
   const [active, setActive] = useState<string>("app");
-  const current = stages.find((s) => s.id === active) ?? stages[0];
+  const activeIndex = Math.max(
+    0,
+    stages.findIndex((s) => s.id === active),
+  );
+  const current = stages[activeIndex] ?? stages[0];
 
   return (
     <section id="como-funciona" className="py-24">
@@ -83,31 +87,48 @@ export function ArchitectureSection() {
         <SectionHeading
           eyebrow="Cómo funciona"
           title="El recorrido completo, desde la foto hasta el dashboard"
-          description="Toca cada etapa del diagrama para ver qué pasa en ese punto del sistema."
+          description="Toca o pasa el mouse por cada etapa: se ilumina el paso, se completa el recorrido hasta él y las demás etapas quedan atenuadas."
         />
 
         <Reveal className="mt-12">
           <div className="surface-card p-5 sm:p-8">
-            {/* Diagrama de flujo interactivo */}
-            <ol className="flex flex-wrap items-stretch gap-3">
+            {/* Diagrama de flujo interactivo tipo "pipeline":
+                - la etapa activa se ilumina,
+                - las etapas ya recorridas quedan en un estado intermedio,
+                - las siguientes se atenúan hasta que se seleccionan. */}
+            <ol
+              className="flex flex-wrap items-stretch gap-3"
+              onMouseLeave={() => setActive(stages[activeIndex]?.id ?? "app")}
+            >
               {stages.map((s, i) => {
                 const Icon = s.icon;
                 const isActive = s.id === active;
+                const isDone = i < activeIndex;
+                const isPending = i > activeIndex;
                 return (
                   <li key={s.id} className="flex items-center gap-3">
                     <button
                       type="button"
                       onClick={() => setActive(s.id)}
                       onMouseEnter={() => setActive(s.id)}
+                      onFocus={() => setActive(s.id)}
                       aria-pressed={isActive}
                       className={cn(
-                        "flex w-28 flex-col items-center gap-2 rounded-2xl border p-3 text-center transition-all duration-300 sm:w-32",
+                        "relative flex w-28 flex-col items-center gap-2 rounded-2xl border p-3 text-center outline-none transition-all duration-500 ease-out focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:w-32",
                         isActive
-                          ? "-translate-y-1 border-transparent bg-gradient-brand text-primary-foreground shadow-[var(--shadow-lift)]"
-                          : "border-border bg-card hover:-translate-y-0.5 hover:border-primary/40",
+                          ? "-translate-y-1 scale-[1.04] border-transparent bg-gradient-brand text-primary-foreground shadow-[var(--shadow-lift)]"
+                          : isDone
+                            ? "border-primary/35 bg-secondary/60 opacity-90"
+                            : "border-border bg-card opacity-55 hover:-translate-y-0.5 hover:border-primary/40 hover:opacity-100",
                       )}
+                      style={{ transitionDelay: `${isPending ? 0 : i * 40}ms` }}
                     >
-                      <Icon className={cn("h-6 w-6", isActive ? "" : "text-primary")} />
+                      <Icon
+                        className={cn(
+                          "h-6 w-6 transition-transform duration-500",
+                          isActive ? "scale-110" : "text-primary",
+                        )}
+                      />
                       <span className="text-xs font-bold leading-tight">{s.label}</span>
                       <span
                         className={cn(
@@ -117,9 +138,25 @@ export function ArchitectureSection() {
                       >
                         {s.short}
                       </span>
+                      {/* barra de progreso del pipeline bajo cada etapa recorrida */}
+                      <span
+                        aria-hidden
+                        className={cn(
+                          "absolute inset-x-3 bottom-1.5 h-0.5 origin-left rounded-full bg-gradient-brand transition-transform duration-500 ease-out",
+                          isPending ? "scale-x-0" : "scale-x-100",
+                          isActive && "bg-primary-foreground/70",
+                        )}
+                      />
                     </button>
                     {i < stages.length - 1 ? (
-                      <ChevronRight className="hidden h-4 w-4 shrink-0 text-muted-foreground sm:block" />
+                      <ChevronRight
+                        className={cn(
+                          "hidden h-4 w-4 shrink-0 transition-all duration-500 sm:block",
+                          i < activeIndex
+                            ? "translate-x-0.5 text-primary"
+                            : "text-muted-foreground/50",
+                        )}
+                      />
                     ) : null}
                   </li>
                 );
@@ -127,8 +164,14 @@ export function ArchitectureSection() {
             </ol>
 
             {/* Explicación de la etapa seleccionada */}
-            <div className="mt-6 rounded-2xl bg-secondary/60 p-5">
-              <h3 className="text-base font-bold">
+            <div
+              key={current.id}
+              className="mt-6 animate-fade-in rounded-2xl border border-primary/20 bg-secondary/60 p-5"
+            >
+              <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                Paso {activeIndex + 1} de {stages.length}
+              </span>
+              <h3 className="mt-1 text-base font-bold">
                 {current.label} · <span className="text-primary">{current.short}</span>
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{current.detail}</p>
