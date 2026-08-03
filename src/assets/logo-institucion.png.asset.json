@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "asset_id": "9e57f53d-456e-4f62-84fd-0d72a2a1437b",
+  "asset_id": "5cdb09be-6abc-43e2-828c-0ff94f8e5bf5",
   "project_id": "1b5caa36-3fc1-4cc4-beff-f437c42ffaee",
-  "url": "/__l5e/assets-v1/9e57f53d-456e-4f62-84fd-0d72a2a1437b/logo-institucion-clean.png",
-  "r2_key": "a/v1/1b5caa36-3fc1-4cc4-beff-f437c42ffaee/9e57f53d-456e-4f62-84fd-0d72a2a1437b/logo-institucion-clean.png",
-  "original_filename": "logo-institucion-clean.png",
-  "size": 288630,
+  "url": "/__l5e/assets-v1/5cdb09be-6abc-43e2-828c-0ff94f8e5bf5/logo-institucion-v2.png",
+  "r2_key": "a/v1/1b5caa36-3fc1-4cc4-beff-f437c42ffaee/5cdb09be-6abc-43e2-828c-0ff94f8e5bf5/logo-institucion-v2.png",
+  "original_filename": "logo-institucion-v2.png",
+  "size": 242590,
   "content_type": "image/png",
-  "created_at": "2026-08-03T23:30:33Z"
+  "created_at": "2026-08-03T23:32:01Z"
 }
