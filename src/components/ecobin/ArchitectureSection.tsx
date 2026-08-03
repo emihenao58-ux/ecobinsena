@@ -76,6 +76,97 @@ const stages = [
 ] as const;
 
 export function ArchitectureSection() {
+  return <ArchitectureSectionInner />;
+}
+
+/**
+ * Micro-animación propia de cada etapa, mostrada solo cuando está activa.
+ * Cada efecto representa visualmente lo que hace ese paso del sistema.
+ */
+function StageEffect({ id }: { id: string }) {
+  switch (id) {
+    case "app":
+      // flash de cámara
+      return (
+        <span
+          aria-hidden
+          className="anim-flash pointer-events-none absolute -inset-2 rounded-full bg-primary-foreground/80 blur-[2px]"
+        />
+      );
+    case "ia":
+      // línea de escaneo recorriendo el ícono
+      return (
+        <span aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden rounded">
+          <span className="anim-scan absolute inset-x-0 h-0.5 bg-primary-foreground shadow-[0_0_6px_currentColor]" />
+        </span>
+      );
+    case "mqtt":
+      // ondas de señal saliendo
+      return (
+        <span aria-hidden className="pointer-events-none absolute inset-0">
+          {[0, 0.6, 1.2].map((d) => (
+            <span
+              key={d}
+              style={{ animationDelay: `${d}s` }}
+              className="anim-wave absolute inset-0 rounded-full border border-primary-foreground/70"
+            />
+          ))}
+        </span>
+      );
+    case "esp":
+      // LED parpadeando
+      return (
+        <span
+          aria-hidden
+          className="anim-led pointer-events-none absolute -right-1 -top-1 h-2 w-2 rounded-full bg-primary-foreground shadow-[0_0_8px_currentColor]"
+        />
+      );
+    case "caneca":
+      // tapa girando como si el servomotor abriera
+      return (
+        <span
+          aria-hidden
+          className="anim-servo pointer-events-none absolute -top-1 left-0 h-0.5 w-6 rounded-full bg-primary-foreground"
+        />
+      );
+    case "sql":
+      // filas llenándose
+      return (
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -bottom-1.5 left-1/2 flex w-6 -translate-x-1/2 flex-col gap-0.5"
+        >
+          {[0, 0.25, 0.5].map((d) => (
+            <span
+              key={d}
+              style={{ animationDelay: `${d}s` }}
+              className="anim-row h-0.5 rounded-full bg-primary-foreground/80"
+            />
+          ))}
+        </span>
+      );
+    case "bi":
+      // barras de gráfica creciendo
+      return (
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -bottom-1.5 left-1/2 flex h-2 w-6 -translate-x-1/2 items-end justify-center gap-0.5"
+        >
+          {[0.4, 0.75, 1].map((h, i) => (
+            <span
+              key={h}
+              style={{ height: `${h * 100}%`, animationDelay: `${i * 0.15}s` }}
+              className="anim-bar w-1 rounded-sm bg-primary-foreground/80"
+            />
+          ))}
+        </span>
+      );
+    default:
+      return null;
+  }
+}
+
+function ArchitectureSectionInner() {
   const [active, setActive] = useState<string>("app");
   const [playing, setPlaying] = useState(false);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
