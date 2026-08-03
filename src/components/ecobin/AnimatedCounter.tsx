@@ -31,7 +31,7 @@ export function AnimatedCounter({
 
   return (
     <span ref={ref} className="tabular-nums">
-      {display}
+      {display.toLocaleString("es-CO")}
       {suffix}
     </span>
   );

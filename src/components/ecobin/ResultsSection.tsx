@@ -1,7 +1,8 @@
 import { SectionHeading } from "./SectionHeading";
 import { Reveal } from "./Reveal";
 import { AnimatedCounter } from "./AnimatedCounter";
-import { DataPlaceholder, Placeholder } from "./Placeholder";
+import panelMetricas from "@/assets/panel-1-metricas.png.asset.json";
+import panelActividad from "@/assets/panel-2-actividad.png.asset.json";
 
 export function ResultsSection() {
   return (
@@ -13,57 +14,67 @@ export function ResultsSection() {
           description="El piloto sigue en marcha, así que estas cifras cambian cada semana. Los dashboards de Power BI se alimentan de la base de datos SQL a través de scripts en Python."
         />
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-3">
-          <MetricCard value={100} label="escaneos de prueba realizados" />
-          <MetricCard value={50} label="escaneos nuevos por semana (aprox.)" />
-          <MetricCard value={500} label="meta final del piloto (250 a 500)" />
+        {/* Cifras tomadas del panel de administración de la app (no estimadas). */}
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <MetricCard value={178} label="clasificaciones totales realizadas" />
+          <MetricCard value={95} suffix="%" label="de precisión medida hasta ahora" />
+          <MetricCard value={9} label="registros marcados como incorrectos por los usuarios" />
+          <MetricCard value={260044} label="tokens consumidos en el periodo (aprox.)" />
         </div>
 
-        <Reveal className="mt-6">
-          <div className="surface-card p-6 text-sm leading-relaxed text-muted-foreground">
-            Indicadores pendientes de completar con los datos del dashboard:{" "}
-            <DataPlaceholder>% de aciertos según el feedback de los usuarios</DataPlaceholder>{" "}
-            <DataPlaceholder>categoría de residuo más escaneada</DataPlaceholder>{" "}
-            <DataPlaceholder>evolución semanal de escaneos</DataPlaceholder>
-          </div>
-        </Reveal>
-
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          {/*
-            TODO EQUIPO ECOBIN: para incrustar un dashboard, en Power BI usar
-            "Publicar en la web" y reemplazar el bloque Placeholder por:
-            <iframe title="Dashboard EcoBin" src="URL_DE_POWER_BI"
-              className="h-full w-full rounded-2xl border-0" allowFullScreen />
-          */}
-          <Reveal>
-            <Placeholder
-              label="[DASHBOARD POWER BI: escaneos y categorías]"
-              hint="Pegar aquí el iframe de Power BI o una captura del informe"
-              className="min-h-72 bg-card"
-            />
-          </Reveal>
-          <Reveal delay={100}>
-            <Placeholder
-              label="[DASHBOARD POWER BI: encuesta a 30 estudiantes]"
-              hint="Pegar aquí el iframe de Power BI o una captura del informe"
-              className="min-h-72 bg-card"
-            />
-          </Reveal>
+          <DashboardShot
+            src={panelMetricas.url}
+            alt="Panel de analítica de EcoScan IA: 178 clasificaciones, 95% de precisión, 9 marcadas incorrectas y consumo de tokens"
+            caption="Panel de analítica de la app: métricas generales y consumo de tokens."
+          />
+          <DashboardShot
+            src={panelActividad.url}
+            alt="Panel de analítica de EcoScan IA: actividad por hora del día y listado de registros"
+            caption="Actividad por hora del día y registros recientes. Se muestra como referencia visual: los valores exactos de cada barra no se leen en la captura."
+            delay={100}
+          />
         </div>
       </div>
     </section>
   );
 }
 
-function MetricCard({ value, label }: { value: number; label: string }) {
+function MetricCard({ value, label, suffix }: { value: number; label: string; suffix?: string }) {
   return (
     <Reveal>
       <div className="surface-card lift-on-hover h-full p-6">
         <p className="font-display text-4xl font-extrabold text-gradient-brand">
-          <AnimatedCounter value={value} />
+          <AnimatedCounter value={value} suffix={suffix ?? ""} />
         </p>
         <p className="mt-2 text-sm text-muted-foreground">{label}</p>
       </div>
+    </Reveal>
+  );
+}
+
+/** Captura del panel de administración, presentada como evidencia visual. */
+function DashboardShot({
+  src,
+  alt,
+  caption,
+  delay = 0,
+}: {
+  src: string;
+  alt: string;
+  caption: string;
+  delay?: number;
+}) {
+  return (
+    <Reveal delay={delay}>
+      <figure className="surface-card lift-on-hover h-full overflow-hidden p-4">
+        <div className="overflow-hidden rounded-2xl border border-border">
+          <img src={src} alt={alt} loading="lazy" className="block w-full object-cover object-top" />
+        </div>
+        <figcaption className="mt-3 text-xs leading-relaxed text-muted-foreground">
+          {caption}
+        </figcaption>
+      </figure>
     </Reveal>
   );
 }
