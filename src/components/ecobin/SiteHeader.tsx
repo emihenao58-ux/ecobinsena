@@ -101,8 +101,8 @@ export function SiteHeader() {
 
 /**
  * Contenedor de los logos oficiales (SENA / Institución).
- * Fondo claro fijo para que los logos se lean bien también en modo oscuro,
- * y altura común para que ambos tengan el mismo peso visual.
+ * Los archivos ya vienen recortados y con fondo transparente, así que se
+ * muestran sin recuadro: misma caja cuadrada para que ninguno pese más que el otro.
  */
 export function LogoSlot({
   src,
@@ -116,11 +116,16 @@ export function LogoSlot({
   return (
     <div
       className={cn(
-        "flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-white p-1 shadow-[var(--shadow-soft)]",
+        "flex h-10 w-10 shrink-0 items-center justify-center",
         className,
       )}
     >
-      <img src={src} alt={alt} loading="lazy" className="h-full w-full object-contain" />
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        className="h-full w-full object-contain drop-shadow-sm"
+      />
     </div>
   );
 }
