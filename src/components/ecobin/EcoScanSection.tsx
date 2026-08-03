@@ -1,11 +1,7 @@
-import { useState } from "react";
-import { Camera, ScanSearch, ListChecks, ThumbsUp, ChevronLeft, ChevronRight } from "lucide-react";
+import { Camera, ScanSearch, ListChecks, ThumbsUp } from "lucide-react";
 import { SectionHeading } from "./SectionHeading";
 import { Reveal } from "./Reveal";
-import appInicio from "@/assets/app-1-inicio.png.asset.json";
-import appAnalizando from "@/assets/app-2-analizando.png.asset.json";
-import appResultado from "@/assets/app-3-resultado.png.asset.json";
-import appInstruccion from "@/assets/app-4-instruccion.png.asset.json";
+import { Placeholder } from "./Placeholder";
 
 const pasos = [
   {
@@ -28,14 +24,6 @@ const pasos = [
     title: "4. Feedback del usuario",
     body: "La persona responde si la clasificación fue correcta (sí / no) o la pantalla se cierra por tiempo (timeout). Ese dato nos sirve para revisar qué tanto acierta la IA.",
   },
-];
-
-/** Capturas reales de la app, en el orden del flujo de uso. */
-const capturas = [
-  { src: appInicio.url, caption: "Pantalla de inicio: el usuario abre EcoScan IA y toma la foto." },
-  { src: appAnalizando.url, caption: "La IA analiza la imagen y sugiere la categoría del residuo." },
-  { src: appResultado.url, caption: "Resultado con la foto tomada y la confirmación del usuario." },
-  { src: appInstruccion.url, caption: "Explicación de la IA e instrucción de dónde depositarlo." },
 ];
 
 export function EcoScanSection() {
@@ -63,9 +51,11 @@ export function EcoScanSection() {
             ))}
           </ol>
 
-          {/* Carrusel con las capturas reales de la app dentro de un marco de celular */}
-          <Reveal className="flex justify-center">
-            <PhoneCarousel />
+          {/* Mockups: 3 pantallas dentro de marcos de celular */}
+          <Reveal className="flex flex-wrap justify-center gap-5 lg:flex-nowrap">
+            <PhoneFrame label="[CAPTURA APP 1: foto del residuo]" />
+            <PhoneFrame label="[CAPTURA APP 2: clasificación]" className="lg:mt-8" />
+            <PhoneFrame label="[CAPTURA APP 3: instrucción y feedback]" className="lg:mt-16" />
           </Reveal>
         </div>
       </div>
@@ -73,64 +63,17 @@ export function EcoScanSection() {
   );
 }
 
-/**
- * Carrusel de capturas reales dentro de un marco de celular.
- * Navegación con flechas y con los puntos inferiores (sin autoplay para no distraer).
- */
-function PhoneCarousel() {
-  const [index, setIndex] = useState(0);
-  const total = capturas.length;
-  const go = (dir: number) => setIndex((i) => (i + dir + total) % total);
-  const actual = capturas[index]!;
-
+/** Marco de celular para mostrar las capturas reales de EcoScan IA. */
+function PhoneFrame({ label, className }: { label: string; className?: string }) {
   return (
-    <div className="w-full max-w-xs">
-      <div className="relative mx-auto w-56 rounded-[2.2rem] border-[6px] border-foreground/85 bg-foreground/85 p-1 shadow-[var(--shadow-soft)] sm:w-64">
-        <div className="relative overflow-hidden rounded-[1.8rem] bg-card">
-          <div className="absolute left-1/2 top-2 z-10 h-1.5 w-14 -translate-x-1/2 rounded-full bg-background/40" />
-          <img
-            key={actual.src}
-            src={actual.src}
-            alt={actual.caption}
-            loading="lazy"
-            className="block aspect-[9/19] w-full object-cover object-top"
-          />
-        </div>
-
-        <button
-          type="button"
-          onClick={() => go(-1)}
-          aria-label="Captura anterior"
-          className="absolute -left-4 top-1/2 -translate-y-1/2 rounded-full border border-border bg-card p-2 text-foreground shadow-[var(--shadow-soft)] transition-transform hover:scale-110"
-        >
-          <ChevronLeft className="h-4 w-4" />
-        </button>
-        <button
-          type="button"
-          onClick={() => go(1)}
-          aria-label="Captura siguiente"
-          className="absolute -right-4 top-1/2 -translate-y-1/2 rounded-full border border-border bg-card p-2 text-foreground shadow-[var(--shadow-soft)] transition-transform hover:scale-110"
-        >
-          <ChevronRight className="h-4 w-4" />
-        </button>
+    <div
+      className={`lift-on-hover w-40 rounded-[2rem] border-[6px] border-foreground/85 bg-foreground/85 p-1 shadow-[var(--shadow-soft)] sm:w-44 ${className ?? ""}`}
+    >
+      <div className="relative overflow-hidden rounded-[1.6rem] bg-card">
+        <div className="absolute left-1/2 top-2 h-1.5 w-12 -translate-x-1/2 rounded-full bg-foreground/20" />
+        {/* TODO: reemplazar por la captura real de la app */}
+        <Placeholder label={label} className="aspect-[9/19] border-0 bg-transparent px-3" />
       </div>
-
-      <div className="mt-4 flex justify-center gap-2">
-        {capturas.map((c, i) => (
-          <button
-            key={c.src}
-            type="button"
-            onClick={() => setIndex(i)}
-            aria-label={`Ver captura ${i + 1}`}
-            aria-current={i === index}
-            className={`h-2 rounded-full transition-all ${i === index ? "w-6 bg-primary" : "w-2 bg-border hover:bg-primary/50"}`}
-          />
-        ))}
-      </div>
-
-      <p className="mt-3 text-center text-xs leading-relaxed text-muted-foreground">
-        {actual.caption}
-      </p>
     </div>
   );
 }
