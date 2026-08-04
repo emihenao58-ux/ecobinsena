@@ -63,7 +63,15 @@ export function ResultsSection() {
   );
 }
 
-function MetricCard({ value, label }: { value: number; label: string }) {
+function MetricCard({
+  value,
+  label,
+  suffix,
+}: {
+  value: number;
+  label: string;
+  suffix?: string;
+}) {
   return (
     <Reveal>
       <div className="surface-card lift-on-hover h-full p-6">
