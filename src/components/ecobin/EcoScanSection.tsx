@@ -1,7 +1,7 @@
 import { Camera, ScanSearch, ListChecks, ThumbsUp } from "lucide-react";
 import { SectionHeading } from "./SectionHeading";
 import { Reveal } from "./Reveal";
-import { Placeholder } from "./Placeholder";
+import { EcoScanPhoneCarousel } from "./EcoScanPhoneCarousel";
 
 const pasos = [
   {
@@ -36,7 +36,7 @@ export function EcoScanSection() {
           description="EcoScan IA es la parte que ve el usuario. No pretende ser infalible: identifica el residuo, sugiere la categoría correcta y pide confirmación para seguir mejorando."
         />
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_auto] lg:items-start">
+        <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_auto] lg:items-center">
           <ol className="grid gap-4 sm:grid-cols-2">
             {pasos.map((p, i) => (
               <Reveal key={p.title} delay={i * 80} as="li">
@@ -51,29 +51,12 @@ export function EcoScanSection() {
             ))}
           </ol>
 
-          {/* Mockups: 3 pantallas dentro de marcos de celular */}
-          <Reveal className="flex flex-wrap justify-center gap-5 lg:flex-nowrap">
-            <PhoneFrame label="[CAPTURA APP 1: foto del residuo]" />
-            <PhoneFrame label="[CAPTURA APP 2: clasificación]" className="lg:mt-8" />
-            <PhoneFrame label="[CAPTURA APP 3: instrucción y feedback]" className="lg:mt-16" />
+          {/* Mockup interactivo: recreación limpia de las pantallas reales de la app */}
+          <Reveal className="flex justify-center">
+            <EcoScanPhoneCarousel />
           </Reveal>
         </div>
       </div>
     </section>
-  );
-}
-
-/** Marco de celular para mostrar las capturas reales de EcoScan IA. */
-function PhoneFrame({ label, className }: { label: string; className?: string }) {
-  return (
-    <div
-      className={`lift-on-hover w-40 rounded-[2rem] border-[6px] border-foreground/85 bg-foreground/85 p-1 shadow-[var(--shadow-soft)] sm:w-44 ${className ?? ""}`}
-    >
-      <div className="relative overflow-hidden rounded-[1.6rem] bg-card">
-        <div className="absolute left-1/2 top-2 h-1.5 w-12 -translate-x-1/2 rounded-full bg-foreground/20" />
-        {/* TODO: reemplazar por la captura real de la app */}
-        <Placeholder label={label} className="aspect-[9/19] border-0 bg-transparent px-3" />
-      </div>
-    </div>
   );
 }

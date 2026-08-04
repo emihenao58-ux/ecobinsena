@@ -1,7 +1,7 @@
 import { SectionHeading } from "./SectionHeading";
 import { Reveal } from "./Reveal";
 import { AnimatedCounter } from "./AnimatedCounter";
-import { DataPlaceholder, Placeholder } from "./Placeholder";
+import { Placeholder } from "./Placeholder";
 
 export function ResultsSection() {
   return (
@@ -19,14 +19,22 @@ export function ResultsSection() {
           <MetricCard value={500} label="meta final del piloto (250 a 500)" />
         </div>
 
-        <Reveal className="mt-6">
-          <div className="surface-card p-6 text-sm leading-relaxed text-muted-foreground">
-            Indicadores pendientes de completar con los datos del dashboard:{" "}
-            <DataPlaceholder>% de aciertos según el feedback de los usuarios</DataPlaceholder>{" "}
-            <DataPlaceholder>categoría de residuo más escaneada</DataPlaceholder>{" "}
-            <DataPlaceholder>evolución semanal de escaneos</DataPlaceholder>
-          </div>
+        {/* Cifras tomadas del panel de administración de la app EcoScan IA */}
+        <Reveal className="mt-10">
+          <p className="text-sm font-semibold uppercase tracking-widest text-primary">
+            Panel de administración de EcoScan IA
+          </p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Datos acumulados que registra la propia app (periodo &ldquo;Todo&rdquo;).
+          </p>
         </Reveal>
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <MetricCard value={178} label="clasificaciones totales realizadas" />
+          <MetricCard value={95} suffix="%" label="de precisión medida hasta ahora" />
+          <MetricCard value={9} label="registros marcados como incorrectos por los usuarios" />
+          <MetricCard value={260044} label="tokens consumidos en el periodo (aprox.)" />
+        </div>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
           {/*
@@ -55,12 +63,20 @@ export function ResultsSection() {
   );
 }
 
-function MetricCard({ value, label }: { value: number; label: string }) {
+function MetricCard({
+  value,
+  label,
+  suffix,
+}: {
+  value: number;
+  label: string;
+  suffix?: string;
+}) {
   return (
     <Reveal>
       <div className="surface-card lift-on-hover h-full p-6">
         <p className="font-display text-4xl font-extrabold text-gradient-brand">
-          <AnimatedCounter value={value} />
+          <AnimatedCounter value={value} suffix={suffix ?? ""} />
         </p>
         <p className="mt-2 text-sm text-muted-foreground">{label}</p>
       </div>
