@@ -8,6 +8,7 @@ import { ImpactSection } from "@/components/ecobin/ImpactSection";
 import { ArchitectureSection } from "@/components/ecobin/ArchitectureSection";
 import { TechSection } from "@/components/ecobin/TechSection";
 import { EcoScanSection } from "@/components/ecobin/EcoScanSection";
+import { IntelligenceSection } from "@/components/ecobin/IntelligenceSection";
 import { ResultsSection } from "@/components/ecobin/ResultsSection";
 import { PrototypeSection } from "@/components/ecobin/PrototypeSection";
 import { TeamSection } from "@/components/ecobin/TeamSection";
@@ -48,6 +49,7 @@ function Index() {
         <ArchitectureSection />
         <TechSection />
         <EcoScanSection />
+        <IntelligenceSection />
         <ResultsSection />
         <PrototypeSection />
         <TeamSection />
