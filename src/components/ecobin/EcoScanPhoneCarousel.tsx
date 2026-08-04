@@ -148,7 +148,7 @@ function AppHeader() {
 
 function ScreenShell({ children }: { children: ReactNode }) {
   return (
-    <div className="flex h-full flex-col bg-[var(--gradient-hero)]">
+    <div className="flex h-full flex-col" style={{ backgroundImage: "var(--gradient-hero)" }}>
       <AppHeader />
       <div className="min-h-0 flex-1 px-3.5 pb-4 pt-3">{children}</div>
     </div>
@@ -167,7 +167,7 @@ function ScreenInicio() {
         <p className="text-[10px] leading-relaxed text-muted-foreground">
           Toma una foto para saber dónde depositarlo
         </p>
-        <span className="mt-1 w-full rounded-full bg-[var(--gradient-brand)] px-3 py-2 text-[11px] font-bold text-primary-foreground">
+        <span className="mt-1 w-full rounded-full px-3 py-2 text-[11px] font-bold text-primary-foreground" style={{ backgroundImage: "var(--gradient-brand)" }}>
           Escanear ahora
         </span>
         <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-muted-foreground">
@@ -187,7 +187,7 @@ function ScreenAnalizando() {
           <div className="flex h-16 items-center justify-center bg-secondary">
             <Recycle className="h-7 w-7 text-primary" />
           </div>
-          <div className="h-0.5 w-full bg-[var(--gradient-brand)]" />
+          <div className="h-0.5 w-full" style={{ backgroundImage: "var(--gradient-brand)" }} />
           <p className="bg-card py-2 text-[10px] font-bold uppercase tracking-widest">
             Reciclables
           </p>
@@ -261,7 +261,7 @@ function ScreenDetalle() {
           </p>
         </div>
         <div className="mt-auto flex items-center gap-2">
-          <span className="flex-1 rounded-full bg-[var(--gradient-brand)] px-3 py-2 text-center text-[11px] font-bold text-primary-foreground">
+          <span className="flex-1 rounded-full px-3 py-2 text-center text-[11px] font-bold text-primary-foreground" style={{ backgroundImage: "var(--gradient-brand)" }}>
             Nuevo escaneo
           </span>
           <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-secondary text-primary">
