@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactElement, type ReactNode } from "react";
 import {
   Camera,
   ChevronLeft,
@@ -20,7 +20,7 @@ import { cn } from "@/lib/utils";
  * (no son capturas de pantalla pegadas). El contenido de los textos sí
  * corresponde a lo que muestra la app real en uso.
  */
-const screens: { id: string; label: string; render: () => JSX.Element }[] = [
+const screens: { id: string; label: string; render: () => ReactElement }[] = [
   { id: "inicio", label: "Inicio", render: () => <ScreenInicio /> },
   { id: "analizando", label: "Analizando", render: () => <ScreenAnalizando /> },
   { id: "resultado", label: "Resultado", render: () => <ScreenResultado /> },
@@ -103,7 +103,7 @@ function CarouselButton({
   label,
   onClick,
 }: {
-  children: JSX.Element;
+  children: ReactNode;
   label: string;
   onClick: () => void;
 }) {
@@ -120,7 +120,7 @@ function CarouselButton({
 }
 
 /** Marco de celular: la carcasa y la pantalla interior. */
-function PhoneShell({ children }: { children: React.ReactNode }) {
+function PhoneShell({ children }: { children: ReactNode }) {
   return (
     <div className="w-[16rem] rounded-[2.4rem] border-[7px] border-foreground/85 bg-foreground/85 p-1 shadow-[var(--shadow-lift)] sm:w-[17rem]">
       <div className="relative aspect-[9/18] overflow-hidden rounded-[1.9rem] bg-card">
@@ -146,7 +146,7 @@ function AppHeader() {
   );
 }
 
-function ScreenShell({ children }: { children: React.ReactNode }) {
+function ScreenShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex h-full flex-col bg-[var(--gradient-hero)]">
       <AppHeader />
