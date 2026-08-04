@@ -11,6 +11,7 @@ const links = [
   { href: "#impacto", label: "Impacto" },
   { href: "#como-funciona", label: "Cómo funciona" },
   { href: "#ecoscan", label: "EcoScan IA" },
+  { href: "#inteligencia", label: "Inteligencia" },
   { href: "#resultados", label: "Resultados" },
   { href: "#prototipo", label: "Prototipo" },
   { href: "#equipo", label: "Equipo" },
