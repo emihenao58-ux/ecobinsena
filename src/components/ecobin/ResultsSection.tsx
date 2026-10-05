@@ -1,7 +1,37 @@
+import { ExternalLink } from "lucide-react";
 import { SectionHeading } from "./SectionHeading";
 import { Reveal } from "./Reveal";
 import { AnimatedCounter } from "./AnimatedCounter";
-import { Placeholder } from "./Placeholder";
+
+const dashboardPanels = [
+  {
+    title: "Dashboard de escaneos y categorías",
+    description:
+      "Resumen del funcionamiento de EcoBin: aciertos, categorías de residuos, evolución de escaneos, usuarios y retroalimentación.",
+    imageSrc: "/dashboards/dashboard-ecobin.png",
+    imageAlt:
+      "Dashboard de escaneos de EcoBin con 100 escaneos, 57 por ciento de aciertos y gráficos de categorías",
+    width: 1325,
+    height: 742,
+  },
+  {
+    title: "Dashboard de encuesta a estudiantes",
+    description:
+      "Resultados de la investigación inicial con 30 estudiantes de la Institución Educativa Urbana San José.",
+    imageSrc: "/dashboards/dashboard-encuesta.png",
+    imageAlt:
+      "Dashboard de encuesta de EcoBin con 30 estudiantes, interés por la app y tipos de residuos frecuentes",
+    width: 1337,
+    height: 752,
+  },
+] as const;
+
+const dashboardFacts = [
+  { value: "57%", label: "porcentaje de aciertos registrado en el panel de escaneos" },
+  { value: "No aprovechables", label: "categoría más frecuente en el panel de escaneos" },
+  { value: "57 · 38 · 5", label: "feedback del panel: sí · timeout · no" },
+  { value: "30", label: "estudiantes incluidos en el dashboard de encuesta" },
+];
 
 export function ResultsSection() {
   return (
@@ -19,59 +49,69 @@ export function ResultsSection() {
           <MetricCard value={500} label="meta final del piloto (250 a 500)" />
         </div>
 
-        {/* Cifras tomadas del panel de administración de la app EcoScan IA */}
         <Reveal className="mt-10">
           <p className="text-sm font-semibold uppercase tracking-widest text-primary">
-            Panel de administración de EcoScan IA
+            Datos destacados de los dashboards
           </p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Datos acumulados que registra la propia app (periodo &ldquo;Todo&rdquo;).
+            Cifras y categorías que se leen directamente en los dos paneles entregados por el
+            equipo.
           </p>
         </Reveal>
 
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <MetricCard value={178} label="clasificaciones totales realizadas" />
-          <MetricCard value={95} suffix="%" label="de precisión medida hasta ahora" />
-          <MetricCard value={9} label="registros marcados como incorrectos por los usuarios" />
-          <MetricCard value={260044} label="tokens consumidos en el periodo (aprox.)" />
+          {dashboardFacts.map((fact) => (
+            <Reveal key={fact.label}>
+              <div className="surface-card lift-on-hover h-full p-5">
+                <p className="font-display text-xl font-extrabold text-gradient-brand">
+                  {fact.value}
+                </p>
+                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{fact.label}</p>
+              </div>
+            </Reveal>
+          ))}
         </div>
 
-        <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          {/*
-            TODO EQUIPO ECOBIN: para incrustar un dashboard, en Power BI usar
-            "Publicar en la web" y reemplazar el bloque Placeholder por:
-            <iframe title="Dashboard EcoBin" src="URL_DE_POWER_BI"
-              className="h-full w-full rounded-2xl border-0" allowFullScreen />
-          */}
-          <Reveal>
-            <Placeholder
-              label="[DASHBOARD POWER BI: escaneos y categorías]"
-              hint="Pegar aquí el iframe de Power BI o una captura del informe"
-              className="min-h-72 bg-card"
-            />
-          </Reveal>
-          <Reveal delay={100}>
-            <Placeholder
-              label="[DASHBOARD POWER BI: encuesta a 30 estudiantes]"
-              hint="Pegar aquí el iframe de Power BI o una captura del informe"
-              className="min-h-72 bg-card"
-            />
-          </Reveal>
+        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+          {dashboardPanels.map((dashboard, i) => (
+            <Reveal key={dashboard.title} delay={i * 100}>
+              <figure className="surface-card h-full overflow-hidden">
+                <div className="border-b border-border bg-card p-3 sm:p-4">
+                  <img
+                    src={dashboard.imageSrc}
+                    alt={dashboard.imageAlt}
+                    loading="lazy"
+                    decoding="async"
+                    width={dashboard.width}
+                    height={dashboard.height}
+                    className="block h-auto w-full rounded-xl border border-border object-contain shadow-[var(--shadow-soft)]"
+                  />
+                </div>
+                <figcaption className="p-6">
+                  <h3 className="text-lg font-extrabold">{dashboard.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {dashboard.description}
+                  </p>
+                  <a
+                    href={dashboard.imageSrc}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-foreground"
+                  >
+                    Abrir dashboard en tamaño completo
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                </figcaption>
+              </figure>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-function MetricCard({
-  value,
-  label,
-  suffix,
-}: {
-  value: number;
-  label: string;
-  suffix?: string;
-}) {
+function MetricCard({ value, label, suffix }: { value: number; label: string; suffix?: string }) {
   return (
     <Reveal>
       <div className="surface-card lift-on-hover h-full p-6">

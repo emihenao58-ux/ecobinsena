@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Recycle, Cpu, BarChart3 } from "lucide-react";
 import { AnimatedCounter } from "./AnimatedCounter";
-import { Placeholder } from "./Placeholder";
 
 export function HeroSection() {
   // Parallax sutil: las formas del fondo se mueven un poco al hacer scroll.
@@ -40,9 +39,9 @@ export function HeroSection() {
           </h1>
 
           <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-            Unimos una app móvil con inteligencia artificial, una caneca con sensores y servomotores,
-            y analítica de datos para que separar los residuos en el colegio sea más fácil y se pueda
-            medir. Es un prototipo funcional hecho por estudiantes de grado 11.
+            Unimos una app móvil con inteligencia artificial, una caneca con sensores y
+            servomotores, y analítica de datos para que separar los residuos en el colegio sea más
+            fácil y se pueda medir. Es un prototipo funcional hecho por estudiantes de grado 11.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
@@ -67,19 +66,39 @@ export function HeroSection() {
           </dl>
         </div>
 
-        <div className="relative">
-          <div className="float-slow surface-card p-4">
-            {/* TODO: subir foto principal del prototipo o render de la caneca */}
-            <Placeholder
-              label="[FOTO PRINCIPAL: caneca EcoBin]"
-              hint="Imagen destacada del prototipo (recomendado 1200×900)"
-              className="aspect-[4/3]"
-            />
-          </div>
-          <div className="mt-4 grid grid-cols-3 gap-3">
-            <MiniCard icon={<Recycle className="h-5 w-5" />} text="Reciclaje" />
-            <MiniCard icon={<Cpu className="h-5 w-5" />} text="IA + IoT" />
-            <MiniCard icon={<BarChart3 className="h-5 w-5" />} text="Datos" />
+        {/* Composición visual sin placeholder: el prototipo se explica con sus tres ideas clave. */}
+        <div className="relative flex min-h-[360px] flex-col justify-center lg:pl-8">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20 bg-primary/5 blur-[1px]"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute left-1/2 top-1/2 h-52 w-52 -translate-x-1/2 -translate-y-1/2 rounded-full border border-accent/25"
+          />
+
+          <div className="relative mx-auto flex w-full max-w-md flex-col items-center text-center lg:mx-0 lg:items-start lg:text-left">
+            <div className="relative flex h-44 w-44 items-center justify-center rounded-full bg-gradient-brand shadow-[var(--shadow-lift)]">
+              <span
+                aria-hidden
+                className="absolute inset-3 rounded-full border border-primary-foreground/30"
+              />
+              <Recycle className="h-20 w-20 text-primary-foreground" strokeWidth={1.4} />
+            </div>
+
+            <p className="mt-6 text-xs font-bold uppercase tracking-[0.2em] text-primary">
+              Prototipo funcional
+            </p>
+            <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
+              Una idea construida por estudiantes: separar residuos, mover una caneca y convertir
+              cada interacción en datos útiles para el colegio.
+            </p>
+
+            <div className="mt-6 grid w-full grid-cols-3 gap-3">
+              <MiniCard icon={<Recycle className="h-5 w-5" />} text="Reciclaje" />
+              <MiniCard icon={<Cpu className="h-5 w-5" />} text="IA + IoT" />
+              <MiniCard icon={<BarChart3 className="h-5 w-5" />} text="Datos" />
+            </div>
           </div>
         </div>
       </div>

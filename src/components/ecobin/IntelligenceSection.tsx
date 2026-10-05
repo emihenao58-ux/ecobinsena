@@ -8,22 +8,18 @@ import {
   Target,
   ArrowDown,
   ArrowRight,
-  ExternalLink,
   ClipboardList,
   Activity,
+  ChevronDown,
 } from "lucide-react";
 import { SectionHeading } from "./SectionHeading";
 import { Reveal } from "./Reveal";
-import { Placeholder } from "./Placeholder";
 import { cn } from "@/lib/utils";
 
 /**
  * Centro de Inteligencia de EcoBin.
  * Muestra el recorrido del dato (app -> IA -> SQL -> Python -> Power BI -> decisiones)
- * y dos tarjetas listas para incrustar los informes publicados de Power BI.
- *
- * TODO EQUIPO ECOBIN: cuando publiquen cada informe en Power BI
- * ("Publicar en la web"), peguen la URL del iframe en `embedUrl`.
+ * y los dos dashboards entregados por el equipo.
  */
 const flujo = [
   {
@@ -65,6 +61,9 @@ const dashboards = [
     eyebrow: "Dashboard de escaneos",
     title: "Actividad del sistema EcoBin",
     body: "Analiza el funcionamiento de EcoBin y la actividad generada por la clasificación automática de residuos.",
+    imageSrc: "/dashboards/dashboard-ecobin.png",
+    imageAlt:
+      "Dashboard de EcoBin con escaneos totales, porcentaje de aciertos, categorías, evolución y actividad por usuario",
     indicadores: [
       "Total de escaneos",
       "Categorías detectadas",
@@ -75,9 +74,8 @@ const dashboards = [
       "Distribución de categorías",
       "Retroalimentación de clasificación",
     ],
-    // TODO: pegar aquí la URL del informe publicado en Power BI
+    // TODO: si el equipo publica el informe en Power BI, poner aquí la URL del iframe.
     embedUrl: "",
-    preview: "bars" as const,
   },
   {
     id: "formulario",
@@ -85,6 +83,9 @@ const dashboards = [
     eyebrow: "Dashboard de formularios",
     title: "Investigación en la institución",
     body: "Presenta los resultados de la encuesta aplicada a estudiantes del colegio durante la fase de investigación.",
+    imageSrc: "/dashboards/dashboard-encuesta.png",
+    imageAlt:
+      "Dashboard de encuesta de EcoBin con estudiantes encuestados, interés por la app, promedio de utilidad y tipos de residuos",
     indicadores: [
       "Participación por grado",
       "Conocimiento sobre reciclaje",
@@ -93,11 +94,10 @@ const dashboards = [
       "Tipos de residuos más frecuentes",
       "Opinión sobre la implementación",
     ],
-    // TODO: pegar aquí la URL del informe publicado en Power BI
+    // TODO: si el equipo publica el informe en Power BI, poner aquí la URL del iframe.
     embedUrl: "",
-    preview: "donut" as const,
   },
-];
+] as const;
 
 export function IntelligenceSection() {
   return (
@@ -125,7 +125,6 @@ export function IntelligenceSection() {
                 <h3 className="mt-4 text-base font-bold">{f.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.body}</p>
 
-                {/* conector: hacia abajo en móvil, hacia el lado en pantallas grandes */}
                 {i < flujo.length - 1 ? (
                   <>
                     <ArrowDown
@@ -147,7 +146,7 @@ export function IntelligenceSection() {
           ))}
         </div>
 
-        {/* Tarjetas de dashboards */}
+        {/* Dashboards reales */}
         <div className="mt-16 grid gap-6 lg:grid-cols-2">
           {dashboards.map((d, i) => (
             <Reveal key={d.id} delay={i * 100}>
@@ -167,15 +166,23 @@ function DashboardCard({
   body,
   indicadores,
   embedUrl,
-  preview,
+  imageSrc,
+  imageAlt,
 }: (typeof dashboards)[number]) {
   const [open, setOpen] = useState(false);
 
   return (
     <article className="surface-card lift-on-hover flex h-full flex-col overflow-hidden">
-      {/* Vista previa del informe (mock hasta tener la captura/iframe real) */}
       <div className="border-b border-border bg-secondary/40 p-4">
-        <DashboardPreview variant={preview} />
+        <img
+          src={imageSrc}
+          alt={imageAlt}
+          loading="lazy"
+          decoding="async"
+          width={1325}
+          height={742}
+          className="block aspect-video w-full rounded-2xl border border-border bg-card object-contain shadow-[var(--shadow-soft)]"
+        />
       </div>
 
       <div className="flex flex-1 flex-col p-6">
@@ -183,7 +190,9 @@ function DashboardCard({
           <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-secondary text-primary">
             <Icon className="h-5 w-5" />
           </span>
-          <span className="text-xs font-bold uppercase tracking-widest text-primary">{eyebrow}</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-primary">
+            {eyebrow}
+          </span>
         </div>
 
         <h3 className="mt-4 text-xl font-extrabold">{title}</h3>
@@ -192,7 +201,10 @@ function DashboardCard({
         <ul className="mt-5 grid gap-2 sm:grid-cols-2">
           {indicadores.map((ind) => (
             <li key={ind} className="flex items-start gap-2 text-sm text-muted-foreground">
-              <span aria-hidden className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-brand" />
+              <span
+                aria-hidden
+                className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-brand"
+              />
               {ind}
             </li>
           ))}
@@ -206,86 +218,33 @@ function DashboardCard({
           aria-expanded={open}
           className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-brand px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-[var(--shadow-soft)] transition-transform duration-300 hover:-translate-y-0.5"
         >
-          Explorar Dashboard
-          <ExternalLink className="h-4 w-4" />
+          {open ? "Ocultar dashboard" : "Explorar dashboard"}
+          <ChevronDown className={cn("h-4 w-4 transition-transform", open && "rotate-180")} />
         </button>
 
         {open ? (
-          <div className="mt-4">
+          <div className="mt-4 overflow-hidden rounded-2xl border border-border bg-card p-2">
             {embedUrl ? (
               <iframe
                 title={title}
                 src={embedUrl}
-                className="h-96 w-full rounded-2xl border-0"
+                className="h-96 w-full rounded-xl border-0"
                 allowFullScreen
               />
             ) : (
-              /* TODO EQUIPO ECOBIN: al publicar el informe en Power BI, poner la URL en `embedUrl`. */
-              <Placeholder
-                label="[IFRAME POWER BI PENDIENTE]"
-                hint="Publicar el informe en Power BI y pegar la URL en embedUrl"
-                className="min-h-56 bg-card"
+              <img
+                src={imageSrc}
+                alt={imageAlt}
+                loading="lazy"
+                decoding="async"
+                width={1325}
+                height={742}
+                className="block h-auto w-full rounded-xl object-contain"
               />
             )}
           </div>
         ) : null}
       </div>
     </article>
-  );
-}
-
-/** Simulación ligera del informe (solo decorativa) mientras no hay captura real. */
-function DashboardPreview({ variant }: { variant: "bars" | "donut" }) {
-  return (
-    <div aria-hidden className="rounded-2xl bg-card p-4 shadow-[var(--shadow-soft)]">
-      <div className="flex items-center justify-between">
-        <span className="h-2.5 w-24 rounded-full bg-secondary" />
-        <span className="h-2.5 w-10 rounded-full bg-secondary" />
-      </div>
-
-      <div className="mt-4 grid grid-cols-3 gap-3">
-        {[0, 1, 2].map((k) => (
-          <div key={k} className="rounded-xl bg-secondary/60 p-3">
-            <span className="block h-3 w-10 rounded-full bg-gradient-brand opacity-80" />
-            <span className="mt-2 block h-2 w-full rounded-full bg-border" />
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-4 grid grid-cols-[1.4fr_1fr] gap-3">
-        <div className="flex h-24 items-end gap-1.5 rounded-xl bg-secondary/50 p-3">
-          {[45, 70, 35, 90, 60, 80, 50].map((h, k) => (
-            <span
-              key={k}
-              style={{ height: `${h}%` }}
-              className="flex-1 rounded-t-md bg-gradient-brand opacity-80"
-            />
-          ))}
-        </div>
-        <div className="flex h-24 items-center justify-center rounded-xl bg-secondary/50 p-3">
-          {variant === "donut" ? (
-            <span
-              className="h-14 w-14 rounded-full"
-              style={{
-                background:
-                  "conic-gradient(var(--primary) 0 45%, var(--teal) 45% 75%, var(--border) 75% 100%)",
-                maskImage: "radial-gradient(circle, transparent 52%, black 53%)",
-                WebkitMaskImage: "radial-gradient(circle, transparent 52%, black 53%)",
-              }}
-            />
-          ) : (
-            <div className="w-full space-y-2">
-              {[85, 60, 40].map((w, k) => (
-                <span
-                  key={k}
-                  style={{ width: `${w}%` }}
-                  className="block h-2.5 rounded-full bg-gradient-brand opacity-80"
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
   );
 }

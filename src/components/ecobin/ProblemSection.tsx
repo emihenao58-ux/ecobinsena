@@ -1,7 +1,25 @@
 import { Trash2, HelpCircle, ClipboardList } from "lucide-react";
 import { SectionHeading } from "./SectionHeading";
 import { Reveal } from "./Reveal";
-import { DataPlaceholder, Placeholder } from "./Placeholder";
+
+const surveyFacts = [
+  {
+    label: "Personas encuestadas",
+    value: "30 estudiantes",
+  },
+  {
+    label: "Distribución por grado",
+    value: "5°: 16 (53,33%) · 11°: 8 (26,67%) · 8°: 6 (20%)",
+  },
+  {
+    label: "Promedio de utilidad de la app",
+    value: "4,14 / 5",
+  },
+  {
+    label: "Residuo más frecuente",
+    value: "Plástico: 24 respuestas (80%)",
+  },
+];
 
 export function ProblemSection() {
   return (
@@ -43,46 +61,46 @@ export function ProblemSection() {
           ))}
         </div>
 
-        {/* Encuesta de diagnóstico: los números los completa el equipo */}
+        {/* Cifras tomadas del dashboard de la encuesta institucional. */}
         <Reveal className="mt-12">
           <div className="surface-card overflow-hidden">
             <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_1fr]">
               <div>
                 <h3 className="text-xl font-bold">Encuesta de diagnóstico</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  Antes de construir nada aplicamos una encuesta a 30 estudiantes del colegio de los
-                  grados 5°, 8° y 11°, para entender qué tanto se sabe sobre separación de residuos.
-                  Estos son los indicadores que estamos midiendo:
+                  Antes de construir nada aplicamos una encuesta a estudiantes de 5°, 8° y 11° de la
+                  Institución Educativa Urbana San José. El dashboard resume los resultados reales
+                  de esa primera medición.
                 </p>
                 <ul className="mt-5 space-y-3 text-sm">
-                  <li className="flex flex-wrap items-center gap-2">
-                    Separa correctamente sus residuos:{" "}
-                    <DataPlaceholder>completar % con resultado de la encuesta</DataPlaceholder>
-                  </li>
-                  <li className="flex flex-wrap items-center gap-2">
-                    Conoce las categorías de la caneca:{" "}
-                    <DataPlaceholder>completar % con resultado de la encuesta</DataPlaceholder>
-                  </li>
-                  <li className="flex flex-wrap items-center gap-2">
-                    Duda al menos una vez al día:{" "}
-                    <DataPlaceholder>completar % con resultado de la encuesta</DataPlaceholder>
-                  </li>
-                  <li className="flex flex-wrap items-center gap-2">
-                    Usaría una app para saber dónde botar:{" "}
-                    <DataPlaceholder>completar % con resultado de la encuesta</DataPlaceholder>
-                  </li>
+                  {surveyFacts.map((fact) => (
+                    <li key={fact.label} className="flex flex-col gap-1">
+                      <span className="font-medium text-foreground">{fact.label}</span>
+                      <span className="inline-flex w-fit max-w-full rounded-full border border-primary/30 bg-secondary/60 px-3 py-1 text-xs font-semibold leading-relaxed text-primary">
+                        {fact.value}
+                      </span>
+                    </li>
+                  ))}
                 </ul>
                 <p className="mt-5 text-xs text-muted-foreground">
-                  Muestra: 30 estudiantes · Grados 5°, 8° y 11° · I. E. Urbana San José, Ebéjico.
+                  Fuente: dashboard de encuesta · I. E. Urbana San José, Ebéjico.
                 </p>
               </div>
 
-              {/* TODO: pegar aquí el iframe público del dashboard de la encuesta */}
-              <Placeholder
-                label="[DASHBOARD POWER BI: encuesta de diagnóstico]"
-                hint="Reemplazar por el iframe de publicación web del informe o por una captura del dashboard"
-                className="min-h-64"
-              />
+              <figure className="overflow-hidden rounded-2xl border border-border bg-card p-2 shadow-[var(--shadow-soft)]">
+                <img
+                  src="/dashboards/dashboard-encuesta.png"
+                  alt="Dashboard de encuesta de EcoBin con resultados de 30 estudiantes"
+                  loading="lazy"
+                  decoding="async"
+                  width={1337}
+                  height={752}
+                  className="block h-auto w-full rounded-xl object-contain"
+                />
+                <figcaption className="px-2 pb-1 pt-3 text-xs text-muted-foreground">
+                  Dashboard de resultados de la encuesta institucional.
+                </figcaption>
+              </figure>
             </div>
           </div>
         </Reveal>
